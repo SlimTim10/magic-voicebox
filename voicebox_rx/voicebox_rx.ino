@@ -9,9 +9,36 @@ enum pins {
 	BTN_PIN = 2,
 };
 
+enum {
+	BUF_SIZE = 32,
+};
+
 TMRpcm tmrpcm;
-uint8_t wavNum;
-char *filename;
+char *buf;
+
+void play_num(uint8_t n) {
+	snprintf(buf, BUF_SIZE, "%d.wav", n);
+	tmrpcm.play(buf);
+	while (tmrpcm.isPlaying());
+}
+
+void speak(uint8_t n) {
+	if (n >= 1 && n < 20) {
+		play_num(n);
+	} else if (n >= 20 && n < 100) {
+		uint8_t tens = ((uint8_t) (n / 10)) * 10;
+		play_num(tens);
+		uint8_t ones = (n % 10);
+		if (ones > 0) {
+			play_num(ones);
+		}
+	} else if (n == 100) {
+		play_num(100);
+	} else {
+		return;
+	}
+}
+
 
 void setup() {
 	pinMode(BTN_PIN, OUTPUT);
@@ -22,17 +49,11 @@ void setup() {
 		return;
 	}
 
-	wavNum = 0;
-	filename = (char *) malloc(32 * sizeof(char));
+	buf = (char *) malloc(BUF_SIZE * sizeof(char));
+
+	speak(1);
 }
 
 void loop() {
-	if (digitalRead(BTN_PIN) == HIGH) {
-		wavNum = (wavNum % 6) + 1;
-		snprintf(filename, 32, "%d.wav", wavNum);
-		tmrpcm.play(filename);
-		delay(10);
-		while (digitalRead(BTN_PIN) == HIGH);
-		delay(10);
-	}
+	
 }
