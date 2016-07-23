@@ -51,7 +51,11 @@ void setup() {
 
 	buf = (char *) malloc(BUF_SIZE * sizeof(char));
 
-	speak(1);
+	uint8_t i;
+	for (i = 1; i <= 100; i++) {
+		speak(i);
+		delay(500);
+	}
 }
 
 void loop() {
