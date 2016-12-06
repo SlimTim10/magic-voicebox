@@ -5,8 +5,7 @@
 enum pins {
 	SD_CS_PIN = 4,
 	SPEAKER_PIN = 9,
-	RF_RX_PIN = 11,
-	BTN_PIN = 2,
+	RF_RX_PIN = 2,
 };
 
 enum {
@@ -41,8 +40,6 @@ void speak(uint8_t n) {
 
 
 void setup() {
-	pinMode(BTN_PIN, OUTPUT);
-	
 	tmrpcm.speakerPin = SPEAKER_PIN;
 
 	if (!SD.begin(SD_CS_PIN)) {
