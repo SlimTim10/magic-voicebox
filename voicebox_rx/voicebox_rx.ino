@@ -7,6 +7,7 @@ enum pins {
 	SPEAKER_PIN = 9,
 	RF_RX_PIN = 2,
 	PHOTOCELL_PIN = 0,
+	LED_PIN = 3,
 };
 
 enum {
